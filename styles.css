@@ -1,0 +1,571 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #e8eaf0;
+    color: #333;
+}
+
+.view {
+    min-height: calc(100vh - 60px);
+}
+
+.login-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* >>> ALTERADO: agora o painel esquerdo usa a imagem de fundo <<< */
+.left-panel {
+    width: 50%;
+    background: url('celebro.jpeg') center center/cover no-repeat;
+    background-color: #7c5cdb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    position: relative;
+}
+
+/* Camada escura para melhorar contraste do texto */
+.left-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: inherit;
+    z-index: 1;
+}
+
+.left-panel .content {
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* >>> Imagem do cérebro <<< */
+.brain-image {
+    width: 220px;
+    max-width: 80%;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.4));
+    animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Efeito de brilho animado */
+@keyframes pulseGlow {
+    0% {
+        filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 18px rgba(0, 255, 255, 0.6));
+    }
+    100% {
+        filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.3));
+    }
+}
+
+.left-panel h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.left-panel p {
+    font-size: 1.25rem;
+    color: white;
+}
+
+.right-panel {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1.25rem;
+    background: #7c5cdb;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #6a4ec9;
+}
+
+.link-cadastro {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #7c5cdb;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.link-cadastro:hover {
+    text-decoration: underline;
+}
+
+.header {
+    background: #2d3e6e;
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.btn-user {
+    background: #7c5cdb;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.btn-user:hover {
+    background: #6a4ec9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.disciplinas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.disciplina-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border-top: 4px solid;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.disciplina-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.disciplina-card.green {
+    border-top-color: #10b981;
+}
+
+.disciplina-card.orange {
+    border-top-color: #f97316;
+}
+
+.disciplina-card.red {
+    border-top-color: #ef4444;
+}
+
+.disciplina-card h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.disciplina-card p {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.disciplina-card p.green {
+    color: #10b981;
+}
+
+.disciplina-card p.orange {
+    color: #f97316;
+}
+
+.disciplina-card p.red {
+    color: #ef4444;
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.fab {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #7c5cdb;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(124, 92, 219, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background 0.3s;
+}
+
+.fab:hover {
+    background: #6a4ec9;
+}
+
+.fab-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.config-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-section h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.resumo-content {
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.text-muted {
+    color: #6b7280;
+}
+
+.resumo-content .highlight {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.faltas-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.chart-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 2rem auto;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 20;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: #f97316;
+    stroke-width: 20;
+    stroke-linecap: round;
+    stroke-dasharray: 691.15;
+    stroke-dashoffset: 691.15;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.chart-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.chart-label {
+    display: block;
+    color: #f97316;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.chart-value {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin: 0.5rem 0;
+}
+
+.chart-sublabel {
+    display: block;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.faltas-info {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 1.5rem 0;
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin: 2rem 0 1rem;
+}
+
+.faltas-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.faltas-table th,
+.faltas-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.faltas-table th {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.faltas-table td {
+    font-size: 0.875rem;
+}
+
+.faltas-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.faltas-table button {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.3s;
+}
+
+.faltas-table button:hover {
+    color: #ef4444;
+}
+
+.toggle-historico {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.toggle-historico a {
+    color: #7c5cdb;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.toggle-historico a:hover {
+    text-decoration: underline;
+}
+
+.back-button {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn-outline {
+    padding: 0.75rem 2rem;
+    background: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-outline:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #9ca3af;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #374151;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .left-panel,
+    .right-panel {
+        width: 100%;
+    }
+    
+    .config-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .disciplinas-grid {
+        grid-template-columns: 1fr;
+    }
+}

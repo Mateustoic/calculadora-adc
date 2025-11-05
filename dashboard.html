@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Calculadora de Frequência</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/celebro.icone.png" type="image/x-icon">
+
+</head>
+<body>
+    <header class="header">
+        <h1>Calculadora de Frequência</h1>
+        <button class="btn-user" onclick="logout()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </button>
+    </header>
+
+    <div id="viewDisciplinas" class="view">
+        <main class="container">
+            <div class="disciplinas-grid" id="disciplinasGrid">
+            </div>
+
+            <div class="fab-container">
+                <button class="fab" onclick="mostrarConfigurar()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <span class="fab-label">Adicionar Disciplina</span>
+            </div>
+        </main>
+    </div>
+
+    <div id="viewConfigurar" class="view" style="display: none;">
+        <main class="container">
+            <h2 class="page-title">Configurar Disciplina</h2>
+
+            <div class="config-layout">
+                <div class="config-form">
+                    <div class="card">
+                        <form id="disciplinaForm">
+                            <div class="form-section">
+                                <h3>1. Informações Básicas</h3>
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" id="nome" placeholder="Engenharia de Software" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Carga Horária Total (horas)</label>
+                                    <input type="number" id="cargaHoraria" required>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>2. Regras de Faltas</h3>
+                                <div class="form-group">
+                                    <label>Limite (%)</label>
+                                    <select id="limitePercentual">
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Horas por Aula</label>
+                                    <input type="number" id="horasPorAula" required>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>3. Cronograma</h3>
+                                <div class="form-group">
+                                    <label>Data de Início</label>
+                                    <input type="date" id="dataInicio" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Dias da Semana</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Seg"> Seg
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Qua"> Qua
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Qui"> Qui
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Sex"> Sex
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Sáb"> Sáb
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="diasSemana" value="Dom"> Dom
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Feriados (datas separadas por vírgula)</label>
+                                    <input type="text" id="feriados" placeholder="2024-12-25, 2024-01-01">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-full">Salvar Configurações</button>
+                            <button type="button" class="btn-outline btn-full" style="margin-top: 1rem;" onclick="voltarDashboard()">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="config-sidebar">
+                    <div class="card">
+                        <h3>Resumo</h3>
+                        <div id="resumo" class="resumo-content">
+                            <p class="text-muted">Preencha os campos para ver o resumo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="viewFaltas" class="view" style="display: none;">
+        <main class="container">
+            <div class="faltas-container">
+                <div class="card">
+                    <div class="chart-container">
+                        <svg class="progress-ring" width="280" height="280">
+                            <circle class="progress-ring-bg" cx="140" cy="140" r="110" />
+                            <circle class="progress-ring-circle" id="progressCircle" cx="140" cy="140" r="110" />
+                        </svg>
+                        <div class="chart-content">
+                            <span class="chart-label">Attenctión</span>
+                            <span class="chart-value" id="diasRestantes">0 DIAS</span>
+                            <span class="chart-sublabel">Restantes</span>
+                        </div>
+                    </div>
+
+                    <p class="faltas-info" id="faltasInfo">
+                        Faltas atuais: 0h de um total de 0h (0%)
+                    </p>
+
+                    <button class="btn-primary" onclick="abrirModalFalta()">Registrar Nova Falta</button>
+
+                    <div id="historicoSection" style="display: none;">
+                        <h3 class="section-title">Histórico de Faltas</h3>
+                        <table class="faltas-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Horas Faltadas</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historicoFaltas">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="toggle-historico" id="toggleHistorico" style="display: none;">
+                        <a href="#" onclick="toggleHistorico(); return false;">Ver Histórico de Faltas</a>
+                    </div>
+
+                    <div class="back-button">
+                        <button class="btn-outline" onclick="voltarDashboard()">Voltar ao Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalFalta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Registrar Nova Falta</h3>
+                <button class="modal-close" onclick="fecharModalFalta()">&times;</button>
+            </div>
+            <form id="faltaForm">
+                <div class="form-group">
+                    <label>Data da Falta</label>
+                    <input type="date" id="dataFalta" required>
+                </div>
+                <div class="form-group">
+                    <label>Horas Faltadas</label>
+                    <input type="number" id="horasFaltadas" required>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Registrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
